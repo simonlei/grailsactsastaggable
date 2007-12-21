@@ -1,7 +1,7 @@
 class BookTests extends GroovyTestCase {
 
     void testAddOneTag() {
-			Book book = new Book();
+			Book book = new Book( name:"aa");
 			book.save()
 
 			book.addTag( "java")
@@ -9,7 +9,7 @@ class BookTests extends GroovyTestCase {
     }
 
 		void testAddMoreTags() {
-			Book book = new Book();
+			Book book = new Book( name:"aa");
 			book.save()
 			
 			book.addTag( "java")
@@ -20,7 +20,7 @@ class BookTests extends GroovyTestCase {
 		}
 
 		void testAddTwoSameTags() {
-			Book book = new Book();
+			Book book = new Book( name:"aa");
 			book.save()
 			
 			book.addTag( "java")
@@ -30,7 +30,7 @@ class BookTests extends GroovyTestCase {
 		}
 
 		void testRemoveNotExistTag() {
-			Book book = new Book();
+			Book book = new Book( name:"aa");
 			book.save()
 			
 			book.addTag( "java")
@@ -39,7 +39,7 @@ class BookTests extends GroovyTestCase {
 		}
 
 		void testRemoveOneTag() {
-			Book book = new Book();
+			Book book = new Book( name:"aa");
 			book.save()
 			
 			book.addTag( "java")
@@ -53,12 +53,15 @@ class BookTests extends GroovyTestCase {
 		}
 	
 		void testSetTags() {
-			Book book = new Book();
+			Book book = new Book( name:"aa");
 			book.save()
 
 			book.tags = "java groovy grails"
 			
 			book.removeTag( "groovy")
 			assertEquals( "java grails", book.tags)
+
+			book.tags = "java java"
+			assertEquals( "java", book.tags)
 		}
 }
