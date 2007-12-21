@@ -14,41 +14,35 @@ class TaggableMixin {
         }
 */
         Taggable.metaClass.addTag = { String tagName ->
-						Tag tag = new Tag( name:tagName)
-						Tag.find
-						// find it, if not save, save
-            Tagging tagging = new Tagging( tag:tag, taggableId: delegate.id, taggableType: delegate.class.toString(), dateCreated:new Date()).save()
+						// Tag.find
+						Tag tag = Tag.findByName( tagName)
+						tag = tag ?: new Tag( name:tagName).save()
+						// find tagging, if not save, save
+						Tagging tagging = Tagging.findWhere( tag:tag, taggableId: delegate.id, taggableType: delegate.class.toString())
+						tagging = tagging ?: new Tagging( tag:tag, taggableId: delegate.id, taggableType: delegate.class.toString(), dateCreated:new Date()).save()
             // delegate.tags << tag
         }
-				Taggable.metaClass.tags = { ->
+				Taggable.metaClass.getTags = { ->
+					def taggings = Tagging.findAllWhere( taggableId: delegate.id, taggableType: delegate.class.toString())
+					taggings.join(" ")
 				}
-				Taggable.metaClass.removeTag = { tag ->
+				Taggable.metaClass.setTags = { String tags ->
+					tags.split(" ").each { tagName ->
+						addTag( tagName)
+					}
+				}
+				Taggable.metaClass.removeTag = { String tagName ->
 						// remove tagging
-						// remove tag?
-
+						Tag tag = Tag.findByName( tagName)
+						// no such tag
+						if ( !tag) return
+						Tagging tagging = Tagging.findWhere( tag:tag, taggableId: delegate.id, taggableType: delegate.class.toString())
+						// no such tagging
+						if ( !tagging) return
+						// remove tag
+						tagging.delete()
 				}
-        Taggable.metaClass.aaa = { ->
-            "aaa"
-        }
         println "=======================I am mixed======================="
 				println Taggable.metaClass.methods
-    }
-
-    static loadTagsForObject( delegate) {
-        def tags = Tagging.findByTaggableTypeAndTaggableId( delegate.class.toString(), delegate.id)
-        tags.each() { tag ->
-            println( tag)            
-        }
-    }
-
-    static callMethodOfItSelf( delegate, name, args) {
-        def metaMethod = Taggable.metaClass.getMetaMethod( name, args)
-        if ( metaMethod) metaMethod.invoke( delegate, args)
-    }
-
-    def aaa() {
-        Taggable taggable = (Taggable)this
-        println "This   ............... + ${taggable}"
-        "aaa"
     }
 }
