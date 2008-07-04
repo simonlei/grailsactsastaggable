@@ -47,7 +47,9 @@ class BookController {
 						println "The params is: ${params}"
 						println "Book's properties : ${book.properties}"
             book.properties = params
-            if(!book.hasErrors() && book.save()) {
+			// It would seem that the tags do not get set with the properties
+			book.tags = params.tags
+			if(!book.hasErrors() && book.save()) {
                 flash.message = "Book ${params.id} updated"
                 redirect(action:show,id:book.id)
             }
@@ -72,8 +74,8 @@ class BookController {
         def book = new Book(params)
 				println "Book's properties : ${book.properties}"
         if(!book.hasErrors() && book.save()) {
-						book.tags = params["tags"]
-						println "Book's properties : ${book.properties}"
+			book.tags = params["tags"]
+				println "Book's properties : ${book.properties}"
             flash.message = "Book ${book.id} created"
             redirect(action:show,id:book.id)
         }

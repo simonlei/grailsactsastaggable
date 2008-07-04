@@ -1,0 +1,3 @@
+class SiteUser {
+	String username
+}
