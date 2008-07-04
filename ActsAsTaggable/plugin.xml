@@ -1,6 +1,6 @@
-<plugin name='acts-as-taggable' version='0.1'>
+<plugin name='acts-as-taggable' version='0.2'>
   <resources>
-    <resource>Tagging</resource>
     <resource>Tag</resource>
+    <resource>Tagging</resource>
   </resources>
 </plugin>

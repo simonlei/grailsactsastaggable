@@ -11,7 +11,7 @@
 // }
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
-                      xml: ['text/xml', 'application/xml'],
+                      // xml: ['text/xml', 'application/xml'],
                       text: 'text-plain',
                       js: 'text/javascript',
                       rss: 'application/rss+xml',
@@ -103,3 +103,6 @@ grails.war.java5.dependencies = [
 ]
 
 
+
+// The following properties have been added by the Upgrade process...
+grails.views.gsp.encoding="UTF-8"

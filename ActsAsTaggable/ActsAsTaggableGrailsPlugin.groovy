@@ -1,6 +1,6 @@
 
 class ActsAsTaggableGrailsPlugin {
-	def version = 0.1
+	def version = 0.2
 	def dependsOn = [:]
 	
 	def doWithSpring = {
